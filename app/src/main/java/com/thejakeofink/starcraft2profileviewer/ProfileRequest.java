@@ -1,5 +1,7 @@
 package com.thejakeofink.starcraft2profileviewer;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -49,5 +51,17 @@ public class ProfileRequest {
 
     private void downloadAndLoadJSON() {
         ByteArrayOutputStream baos = URLConnector.readBytes(buildURLForRequest());
+
+        if (baos != null) {
+            String json = baos.toString();
+
+            try {
+                JSONObject root = new JSONObject(json);
+
+                response.setResponse(root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
