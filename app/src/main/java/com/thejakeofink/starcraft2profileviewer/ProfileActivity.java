@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 
 
 public class ProfileActivity extends Activity {
+
+    public static final int RESPONSE_RETRIEVED = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,25 @@ public class ProfileActivity extends Activity {
 
         TextView textView;
 
+        private ProfileRequest pRequest;
+
+        Handler mhandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case RESPONSE_RETRIEVED:
+                        ProfileResponse pResponse = null;
+                        if (pRequest != null) {
+                            pResponse = pRequest.getResponse();
+                        }
+                        if (pResponse != null && textView != null) {
+                            textView.setText(pResponse.getResponse().toString());
+                        }
+                        break;
+                }
+            }
+        };
+
         public PlaceholderFragment() {
         }
 
@@ -60,6 +83,10 @@ public class ProfileActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+            pRequest = new ProfileRequest("thejakeofink", "346353", mhandler);
+
+            pRequest.sendRequest();
 
             textView = (TextView)rootView.findViewById(R.id.text_dump);
             return rootView;

@@ -1,5 +1,8 @@
 package com.thejakeofink.starcraft2profileviewer;
 
+import android.os.Handler;
+import android.os.Message;
+
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -10,16 +13,19 @@ import java.io.ByteArrayOutputStream;
 public class ProfileRequest {
     private static final String region = "http://us.battle.net/api/sc2/profile/";
 
-    String userName;
-    String accountNumber;
-    ProfileResponse response;
+    protected String userName;
+    protected String accountNumber;
+    protected ProfileResponse response;
+    protected Handler handler;
 
     /*
     Constructor for request, takes in the users profile string
      */
-    public ProfileRequest(String userName, String accountNumber) {
+    public ProfileRequest(String userName, String accountNumber, Handler handler) {
         this.userName = userName;
         this.accountNumber = accountNumber;
+        this.handler = handler;
+        response = new ProfileResponse();
     }
 
     /*
@@ -37,6 +43,8 @@ public class ProfileRequest {
             @Override
             public void run() {
                 downloadAndLoadJSON();
+                Message message = Message.obtain(handler, ProfileActivity.RESPONSE_RETRIEVED);
+                handler.sendMessage(message);
             }
         });
         sendRequestToAPI.start();
