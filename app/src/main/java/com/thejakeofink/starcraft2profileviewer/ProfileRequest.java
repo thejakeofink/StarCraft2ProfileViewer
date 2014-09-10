@@ -43,7 +43,7 @@ public class ProfileRequest {
             @Override
             public void run() {
                 downloadAndLoadJSON();
-                Message message = Message.obtain(handler, ProfileActivity.RESPONSE_RETRIEVED);
+                Message message = Message.obtain(handler, ProfileFragment.RESPONSE_RETRIEVED);
                 handler.sendMessage(message);
             }
         });

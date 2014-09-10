@@ -17,15 +17,13 @@ import android.widget.TextView;
 
 public class ProfileActivity extends Activity {
 
-    public static final int RESPONSE_RETRIEVED = 1337;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new ProfileFragment())
                     .commit();
         }
     }
@@ -50,46 +48,5 @@ public class ProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
 
-        TextView textView;
-
-        private ProfileRequest pRequest;
-
-        Handler mhandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case RESPONSE_RETRIEVED:
-                        ProfileResponse pResponse = null;
-                        if (pRequest != null) {
-                            pResponse = pRequest.getResponse();
-                        }
-                        if (pResponse != null && textView != null) {
-                            textView.setText(pResponse.getResponse().toString());
-                        }
-                        break;
-                }
-            }
-        };
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
-            pRequest = new ProfileRequest("thejakeofink", "346353", mhandler);
-
-            pRequest.sendRequest();
-
-            textView = (TextView)rootView.findViewById(R.id.text_dump);
-            return rootView;
-        }
-    }
 }
