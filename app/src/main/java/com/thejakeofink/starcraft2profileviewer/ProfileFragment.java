@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
                         pResponse = pRequest.getResponse();
                     }
                     if (pResponse != null && textView != null) {
-                        textView.setText(pResponse.getResponse().toString());
+                        //textView.setText(pResponse.getResponse().toString());
                     }
                     break;
             }
@@ -51,6 +51,13 @@ public class ProfileFragment extends Fragment {
         pRequest.sendRequest();
 
         textView = (TextView)rootView.findViewById(R.id.text_dump);
+
+        Bundle bundle = getArguments();
+
+        if (bundle != null && bundle.containsKey(ARG_PLANET_NUMBER)) {
+            String[] planets = getResources().getStringArray(R.array.planets_array);
+            textView.setText(planets[bundle.getInt(ARG_PLANET_NUMBER)]);
+        }
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) rootView.getLayoutParams();
         lp.setMargins(0, lp.topMargin + getStatusBarHeight(), 0, 0);
