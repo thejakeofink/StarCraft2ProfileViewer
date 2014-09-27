@@ -2,8 +2,6 @@
 
     <color name="custom_theme_color">#673ab7</color>
     <color name="background_color">#ede7f6</color>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-    </style>
+    <color name="custom_text_color">#000000</color>
 
 </resources>

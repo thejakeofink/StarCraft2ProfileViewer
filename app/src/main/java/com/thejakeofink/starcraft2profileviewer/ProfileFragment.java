@@ -7,11 +7,14 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 public class ProfileFragment extends Fragment {
 
+    public static final String ARG_PLANET_NUMBER = "planet_number";
     public static final int RESPONSE_RETRIEVED = 1337;
 
     TextView textView;
@@ -48,6 +51,20 @@ public class ProfileFragment extends Fragment {
         pRequest.sendRequest();
 
         textView = (TextView)rootView.findViewById(R.id.text_dump);
+
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) rootView.getLayoutParams();
+        lp.setMargins(0, lp.topMargin + getStatusBarHeight(), 0, 0);
+        rootView.setLayoutParams(lp);
+
         return rootView;
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }
