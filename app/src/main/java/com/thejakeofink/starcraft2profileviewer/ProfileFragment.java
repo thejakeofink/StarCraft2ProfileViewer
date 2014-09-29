@@ -57,6 +57,8 @@ public class ProfileFragment extends Fragment {
         if (bundle != null && bundle.containsKey(ARG_PLANET_NUMBER)) {
             String[] planets = getResources().getStringArray(R.array.planets_array);
             textView.setText(planets[bundle.getInt(ARG_PLANET_NUMBER)]);
+        } else {
+            textView.setText("Select a planet!");
         }
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) rootView.getLayoutParams();

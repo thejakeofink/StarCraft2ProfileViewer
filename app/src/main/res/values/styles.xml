@@ -3,5 +3,7 @@
     <color name="custom_theme_color">#673ab7</color>
     <color name="background_color">#ede7f6</color>
     <color name="custom_text_color">#000000</color>
+    <color name="custom_frame_color">#4527a0</color>
+    <color name="custon_inverse_text">#ffffff</color>
 
 </resources>
